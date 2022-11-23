@@ -110,44 +110,29 @@ var deleteBtn = document.createElement('button');
 
 function removeItem(e){
 
-    // const myobj={ name:newItem,
-    //     email:newItem1
-    
-    //   };
-    //   // Emailid  Use to avoid duplicate
-    //   localStorage.setItem(myobj.email,JSON.stringify(myobj));
-    //   // localStorage.setItem('Name',name);
-    //   // localStorage.setItem('Email',email);
-    
-    //   // get the value from local storage and save it into the form
-    //   const obj=JSON.parse(localStorage.getItem(myobj.email));
-    //   var obj1=myobj.email;
     var items = itemList.getElementsByTagName('li');
     Array.from(items).forEach(function(item){
         var itemName = item.firstChild.textContent;
-        var mail=itemName.split(':');
-        var arr=[];
-        arr.push(mail)
-        var itemName1 = item.childNodes[1].textContent;
+        var array = itemName.split(":");
+        
+        // var itemName1 = item.childNodes[1].textContent;
 
         if (e.target.classList.contains('delete')){
             if(confirm("Are you sure ?")){
-                console.log(itemName);
-                var x = localStorage.getItem("itemName");
-                localStorage.removeItem(x);
+                // console.log(x);
+                
+                console.log(array);
+                var mail = array[1];
+                console.log(mail);
+                localStorage.removeItem(mail);
+                console.log("ggggg",localStorage.getItem(mail));
                 var li = e.target.parentElement;
                 itemList.removeChild(li);
+                // removeUserFromScreen(mail)
                 
             }
         }
-       // console.log(itemName);
-    //    if(itemName.toLowerCase().indexOf(text)!=-1  || itemName1.toLowerCase().indexOf(text)!=-1 ){
-    //        item.style.display='block';
-    //    }
-    //    else{
-    //        item.style.display='none';
-    //    }
-       });
+      });
     
 }
 
@@ -155,36 +140,27 @@ function removeItem(e){
 
 
 
-// Fliter Items
-function filterItems(e) {
-    //  convert text to lowercase
-    var text=e.target.value.toLowerCase();
-    // console.log(text);
-    // get li
-    var items = itemList.getElementsByTagName('li');
-//   convert to an array
-Array.from(items).forEach(function(item){
- var itemName = item.firstChild.textContent;
- var itemName1 = item.childNodes[1].textContent;
-// console.log(itemName);
-if(itemName.toLowerCase().indexOf(text)!=-1  || itemName1.toLowerCase().indexOf(text)!=-1 ){
-    item.style.display='block';
-}
-else{
-    item.style.display='none';
-}
-});
-// Array.from(items).forEach(function(itemid){
-//     var itemName = itemid.firstChild.textContent;
-//    // console.log(itemName);
-//    if(itemName.toLowerCase().indexOf(text)!=-1){
-//     itemid.style.display='block';
-//    }
-//    else{
-//     itemid.style.display='none';
-//    }
-//    });
-}
+// // Fliter Items
+// function filterItems(e) {
+//     //  convert text to lowercase
+//     var text=e.target.value.toLowerCase();
+//     // console.log(text);
+//     // get li
+//     var items = itemList.getElementsByTagName('li');
+// //   convert to an array
+// Array.from(items).forEach(function(item){
+//  var itemName = item.firstChild.textContent;
+//  var itemName1 = item.childNodes[1].textContent;
+// // console.log(itemName);
+// if(itemName.toLowerCase().indexOf(text)!=-1  || itemName1.toLowerCase().indexOf(text)!=-1 ){
+//     item.style.display='block';
+// }
+// else{
+//     item.style.display='none';
+// }
+// });
+
+// }
 
 
 
