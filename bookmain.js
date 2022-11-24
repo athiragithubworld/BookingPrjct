@@ -8,8 +8,8 @@ const msg = document.querySelector('.msg');
 form.addEventListener('submit', addItem);
 // Delete event
 itemList.addEventListener('click', removeItem);
-// Filter event
-filter.addEventListener('keyup', filterItems);
+// // Filter event
+// filter.addEventListener('keyup', filterItems);
 
 // ----------------------------Add item------------------------------------
 function addItem(e){
@@ -27,21 +27,14 @@ function addItem(e){
        // Remove error after 3 seconds
        setTimeout(() => msg.remove(), 3000);
      } else {
-
-  // -------Store the value in local storage----------
-//   const name = e.target.name.value;
-//   const email = e.target.email.value;
-  
-  const myobj={ name:newItem,
+   
+      const myobj={ name:newItem,
     email:newItem1
-
   };
   // Emailid  Use to avoid duplicate
   localStorage.setItem(myobj.email,JSON.stringify(myobj));
-  // localStorage.setItem('Name',name);
-  // localStorage.setItem('Email',email);
-
-  // get the value from local storage and save it into the form
+  
+ // get the value from local storage and save it into the form
   const obj=JSON.parse(localStorage.getItem(myobj.email));
 
 
@@ -108,32 +101,41 @@ var deleteBtn = document.createElement('button');
 // -----------remove item---------------------------
 
 
-function removeItem(e){
+function removeItem(e)
+{
 
     var items = itemList.getElementsByTagName('li');
     Array.from(items).forEach(function(item){
         var itemName = item.firstChild.textContent;
-        var array = itemName.split(":");
+        var arr = itemName.split(": ");
+        var mail = arr[1];
+      
         
+    // });
         // var itemName1 = item.childNodes[1].textContent;
 
         if (e.target.classList.contains('delete')){
-            if(confirm("Are you sure ?")){
-                // console.log(x);
-                
-                console.log(array);
-                var mail = array[1];
-                console.log(mail);
-                localStorage.removeItem(mail);
-                console.log("ggggg",localStorage.getItem(mail));
+            // if(confirm("Are you sure ?")){
+                // console.log(mail);
                 var li = e.target.parentElement;
                 itemList.removeChild(li);
-                // removeUserFromScreen(mail)
+                localStorage.removeItem(mail);
                 
-            }
+                
+                //  removeUserFromScreen(mail)
+                
+            // }
         }
       });
+      
     
+}
+
+function removeUserFromScreen(mail){
+  const parentNode = document.getElementById('itemList');
+  const childNodeToBeDeleted = document.getElementById(mail);
+
+  parentNode.removeChild(childNodeToBeDeleted)
 }
 
 
