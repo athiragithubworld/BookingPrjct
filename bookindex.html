@@ -5,8 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"> 
-  <!-- <title>Item Lister</title>
-  <!-- <style>
+  <!-- <title>Item Lister</title>-->
+  
+    <!-- <style>
     .error {
     background: orangered;
     color: #fff;
@@ -88,21 +89,25 @@ window.addEventListener("DOMContentLoaded",()=>{
 })
 
 function showNewUserOnScreen(user){
-  document.getElementById('email').value=' ';
-  document.getElementById('username').value =' ';
+  document.getElementById('email').value="";
+  document.getElementById('username').value ="";
 
   if(localStorage.getItem(user.email)!==null){
     removeUserFromScreen(user.email)
   }
 
   const parentNode = document.getElementById('userlist');
+  
   const childHTML  = `<li id=${user.email}> ${user.name} - ${user.email}
                                         <button onclick=deleteUser('${user.email}')> Delete User </button>
                                         <button onclick=editUserDetails('${user.email}','${user.name}')>Edit User </button>
                                      </li>`
+  
   parentNode.innerHTML = parentNode.innerHTML + childHTML;
+  
 
 }
+
 
 //  Edit User Details
 function editUserDetails(email,name){
@@ -112,6 +117,7 @@ function editUserDetails(email,name){
   deleteUser(email)
 
 }
+
 
 // delete user details
 function  deleteUser(email){
