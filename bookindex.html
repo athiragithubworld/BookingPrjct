@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-  <!-- <title>Item Lister</title> -->
-  <style>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"> 
+  <!-- <title>Item Lister</title>
+  <!-- <style>
     .error {
     background: orangered;
     color: #fff;
     padding: 5px;
     margin: 3px;
   }
-  </style>
+  </style> -->
 </head>
 <body>
   <header id="main-header" class="bg-success text-white p-4 mb-3">
@@ -22,9 +22,9 @@
         <div class="col-md-6">
             <h1 id="header-title">Booking</h1>
         </div>
-        <div class="col-md-6 align-self-center">
+        <!-- <div class="col-md-6 align-self-center">
             <input type="text" class="form-control" id="filter" placeholder="Search Items...">
-        </div>
+        </div> -->
       </div>
     </div>
   </header>
@@ -32,15 +32,15 @@
    <div id="main" class="card card-body">
     <h2 class="title">Add Details</h2>
     <div class="msg"></div>
-    <form id="addForm" class="form-inline mb-3">
+    <form id="addForm" class="form-inline mb-3" onsubmit="saveToLocalStorage(event)">
      <label for="name">Name:</label>
-      <input type="text" class="form-control mr-2" id="item">
+      <input type="text" class="form-control mr-2" id="username" name ="username" required>
       <label for="email">Email:</label>
-      <input type="text" class="form-control mr-2" id="itemid">
+      <input type="text" class="form-control mr-2" id="email" name="email" required>
       <input type="submit" class="btn btn-dark" value="Submit">
     </form>
     <!-- <h2 class="title">Items</h2> -->
-    <ul id="items" class="list-group">
+    <ul id="userlist" >
       <!-- console.log(" command"); -->
       <!-- <li class="list-group-item"></li> -->
       <!-- <li class="list-group-item">Item 1 <button class="btn btn-dark  btn-sm float-right Edit">Edit</button>
@@ -54,6 +54,80 @@
     </ul>
    </div>
 </section>
-<script src ="bookmain.js"></script>
+<!-- <script src ="bookmain.js"></script> -->
+
+<script>
+
+ function saveToLocalStorage(event) {
+  event.preventDefault();
+  const name=event.target.username.value;
+  const email= event.target.email.value;
+  // store the values but it will delete the previous stored value
+  // localStorage.setItem('name',name);
+  // localStorage.setItem('email', email);
+  const obj={
+    name,
+    email
+  }
+  localStorage.setItem(obj.email,JSON.stringify(obj))
+  showNewUserOnScreen(obj)
+  
+ } 
+
+window.addEventListener("DOMContentLoaded",()=>{
+  const  localStorageObj = localStorage;
+  const localstoragekeys=Object.keys(localStorageObj);
+  
+  for(var i=0;i<localstoragekeys.length;i++){
+    const key = localstoragekeys[i];
+    const userDetailsString = localStorageObj[key];
+    const userDetailsObj = JSON.parse(userDetailsString);
+    showNewUserOnScreen(userDetailsObj);
+  }
+
+})
+
+function showNewUserOnScreen(user){
+  document.getElementById('email').value=' ';
+  document.getElementById('username').value =' ';
+
+  if(localStorage.getItem(user.email)!==null){
+    removeUserFromScreen(user.email)
+  }
+
+  const parentNode = document.getElementById('userlist');
+  const childHTML  = `<li id=${user.email}> ${user.name} - ${user.email}
+                                        <button onclick=deleteUser('${user.email}')> Delete User </button>
+                                        <button onclick=editUserDetails('${user.email}','${user.name}')>Edit User </button>
+                                     </li>`
+  parentNode.innerHTML = parentNode.innerHTML + childHTML;
+
+}
+
+//  Edit User Details
+function editUserDetails(email,name){
+  document.getElementById('email').value=email;
+  document.getElementById('username').value=name;
+
+  deleteUser(email)
+
+}
+
+// delete user details
+function  deleteUser(email){
+  console.log(email);
+  localStorage.removeItem(email);
+  removeUserFromScreen(email);
+}
+
+function removeUserFromScreen(email){
+  const parentNode=document.getElementById('userlist');
+  const childNodeToBeDeleted = document.getElementById(email);
+  if (childNodeToBeDeleted){
+    parentNode.removeChild(childNodeToBeDeleted)
+  }
+}
+
+</script>
 </body>
 </html>
