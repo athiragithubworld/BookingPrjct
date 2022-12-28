@@ -55,7 +55,8 @@
     </ul>
    </div>
 </section>
-<!-- <script src ="bookmain.js"></script> -->
+
+<script src ="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.2/axios.min.js"></script>
 
 <script>
 
@@ -70,8 +71,16 @@
     name,
     email
   }
-  localStorage.setItem(obj.email,JSON.stringify(obj))
-  showNewUserOnScreen(obj)
+  axios.post("https://crudcrud.com/api/f4c70b6a35724d428653486dae2dbbd8/appoinmentBooking",obj)
+  .then((response) =>{
+    showNewUserOnScreen(response.data)
+    console.log(response)
+  })
+  .catch((err) => {
+    console.log(err)
+  })
+  // localStorage.setItem(obj.email,JSON.stringify(obj))
+  // showNewUserOnScreen(obj)
   
  } 
 
