@@ -110,16 +110,20 @@ window.addEventListener("DOMContentLoaded",()=>{
 function showNewUserOnScreen(user){
   document.getElementById('email').value="";
   document.getElementById('username').value ="";
-
+//  user ={
+//   id :" ",
+//   name:"",
+//   email:""
+//  }
   if(localStorage.getItem(user.email)!==null){
     removeUserFromScreen(user.email)
   }
 
   const parentNode = document.getElementById('userlist');
   
-  const childHTML  = `<li id=${user.email}> ${user.name} - ${user.email}
-                                        <button onclick=deleteUser('${user.email}')> Delete User </button>
-                                        <button onclick=editUserDetails('${user.email}','${user.name}')>Edit User </button>
+  const childHTML  = `<li id=${user._id}> ${user.name} - ${user.email}
+                                        <button onclick=deleteUser('${user._id}')> Delete User </button>
+                                        <button onclick=editUserDetails(${user._id},${user.email},'${user.name}')>Edit User </button>
                                      </li>`
   
   parentNode.innerHTML = parentNode.innerHTML + childHTML;
@@ -139,15 +143,22 @@ function editUserDetails(email,name){
 
 
 // delete user details
-function  deleteUser(email){
-  console.log(email);
-  localStorage.removeItem(email);
-  removeUserFromScreen(email);
+function  deleteUser(userId){
+  console.log(userId);
+  axios.delete(`https://crudcrud.com/api/f4c70b6a35724d428653486dae2dbbd8/appoinmentBooking/${userId}`)
+  .then((response) =>{
+    removeUserFromScreen(userId)
+  })
+  .catch((err) => {
+    console.log(err);
+  })
+  // localStorage.removeItem(email);
+  // removeUserFromScreen(email);
 }
 
-function removeUserFromScreen(email){
+function removeUserFromScreen(userId){
   const parentNode=document.getElementById('userlist');
-  const childNodeToBeDeleted = document.getElementById(email);
+  const childNodeToBeDeleted = document.getElementById(userId);
   if (childNodeToBeDeleted){
     parentNode.removeChild(childNodeToBeDeleted)
   }
