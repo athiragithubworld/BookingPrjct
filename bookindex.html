@@ -137,26 +137,29 @@ function showNewUserOnScreen(user){
 
 //  Edit User Details
 function editUserDetails(email,name,userId){
-  document.getElementById('email').value=email;
-  document.getElementById('username').value=name;
-  console.log(userId);
-  deleteUser(userId)
-  // const obj={
+  // document.getElementById('email').value=email;
+  // document.getElementById('username').value=name;
+  // console.log(userId);
+  // deleteUser(userId)
+  const obj={
     
-  //   email,
-  //   name
+    email,
+    name
     
-  // }
-  // axios.put("https://crudcrud.com/api/f1783fd6b56c4d27ae76af4a8b1e45fd/appoinmentBooking",obj)
-  // .then((response) =>{
-  //   showNewUserOnScreen(response.data)
-  //   console.log(response)
+  }
+   axios.put(`https://crudcrud.com/api/f1783fd6b56c4d27ae76af4a8b1e45fd/appoinmentBooking/${userId}`,obj)
+  .then((response) =>{
+   document.getElementById('email').value=email;
+   document.getElementById('username').value=name;
+    // showNewUserOnScreen(response.data)
+    deleteUser(userId)
+    console.log(response)
   
-  // // deleteUser(userId) 
-  // })
-  // .catch((err) => {
-  //   console.log(err);
-  // })
+  // deleteUser(userId) 
+  })
+  .catch((err) => {
+    console.log(err);
+  })
   
 
   
